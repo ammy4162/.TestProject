@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TestCrud.Services.Implementation;
+using TestCrud.Services.Interface;
+using TestCrud.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestCrud
 {
@@ -75,6 +79,8 @@ namespace TestCrud
         private void ConfigureAppServices(IServiceCollection services)
         {
             services.AddDbContext<TestCrud.Repository.DatabaseContext.TestCrudDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestCrud")));
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }
