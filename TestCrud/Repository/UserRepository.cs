@@ -12,13 +12,20 @@ namespace TestCrud.Repository
 {
     public class UserRepository : IUserRepository
     {
+        #region Fields
+
         private readonly TestCrudDbContext testCrudDbContext;
 
+        #endregion
+
+        #region Constructor
         public UserRepository(TestCrudDbContext testCrudDbContext)
         {
             this.testCrudDbContext = testCrudDbContext;
         }
+        #endregion
 
+        #region Public Methods
         public GenericResponse SaveUser(UserProfile userProfile)
         {
             GenericResponse response = new GenericResponse();
@@ -35,6 +42,7 @@ namespace TestCrud.Repository
             }
             dbProfile.Name = userProfile.Name;
             dbProfile.Designation = userProfile.Designation;
+            dbProfile.Dob = userProfile.DOB;
             dbProfile.SkillId = skillTypeId;
             dbProfile.IsArchive = false;
 
@@ -42,7 +50,6 @@ namespace TestCrud.Repository
             response.Error = !savedSuccessfully;
             response.Message = savedSuccessfully ? Constants.ProfileSavedSuccess : Constants.ErrorMessage;
             return response;
-
         }
 
         public UserResponse GetUser(string userId)
@@ -68,6 +75,7 @@ namespace TestCrud.Repository
                             Id = userProfile.Id,
                             Name = userProfile.Name,
                             Designation = userProfile.Designation,
+                            DOB = userProfile.Dob,
                             SkillType = userProfile.Skill.Code
                          }).ToList();
             return users;
@@ -84,9 +92,24 @@ namespace TestCrud.Repository
             return response;
         }
 
+        public List<SelectItem> GetSkillType()
+        {
+            return (from skillType in testCrudDbContext.TbSkillTypes
+                where !skillType.IsArchive
+                select new SelectItem
+                {
+                    Id = skillType.Id,
+                    Code = skillType.Code,
+                    DisplayName = skillType.Display
+                }).ToList();
+        }
+        #endregion
+
+        #region Private Methods
         private int GetSkillTypeId(string skillType)
         {
             return testCrudDbContext.TbSkillTypes.FirstOrDefault(st => st.Code.ToLower() == skillType.ToLower()).Id;
         }
+        #endregion
     }
 }

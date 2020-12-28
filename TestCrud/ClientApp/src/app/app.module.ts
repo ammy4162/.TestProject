@@ -9,9 +9,13 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserListComponent } from './user-details/user-list/user-list.component';
+import { SetupUserComponent } from './user-details/setup-user/setup-user.component';
+import { UserService } from './shared/user.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatLabel, MatMenuModule, MatSelectModule, MatStepperModule } from '@angular/material';
-import { SetupUserComponent } from './setup-user/setup-user.component';
 
 @NgModule({
   declarations: [
@@ -20,34 +24,25 @@ import { SetupUserComponent } from './setup-user/setup-user.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    SetupUserComponent
+    UserDetailsComponent,
+    SetupUserComponent,
+    UserListComponent
+    //d
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
-    MatCardModule,
-    MatStepperModule,
-    MatCardModule,
-    MatMenuModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'create', component: SetupUserComponent },
     ]),
-    BrowserAnimationsModule
   ],
-  exports: [
-    MatButtonModule
-  ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

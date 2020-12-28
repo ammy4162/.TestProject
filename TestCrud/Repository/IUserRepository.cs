@@ -13,5 +13,7 @@ namespace TestCrud.Repository
         List<UserResponse> GetUsers();
 
         GenericResponse DeleteUser(string userId);
+
+        List<SelectItem> GetSkillType();
     }
 }

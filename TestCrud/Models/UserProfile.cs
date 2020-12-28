@@ -1,3 +1,5 @@
+using System;
+
 namespace TestCrud.Models
 {
   public class UserProfile
@@ -6,6 +8,6 @@ namespace TestCrud.Models
     public string Name { get; set; }
     public string Designation { get; set; }
     public string SkillType { get; set; }
-    public bool IsArchive { get; set; }
+    public DateTime? DOB { get; set;}
   }
 }

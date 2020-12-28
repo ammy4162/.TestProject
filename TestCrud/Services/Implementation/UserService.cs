@@ -8,13 +8,20 @@ namespace TestCrud.Services.Implementation
 {
   public class UserService : IUserService
   {
+    #region Fields
+
     private readonly IUserRepository userRepository;
 
+    #endregion
+
+    #region Constructor
     public UserService(IUserRepository userRepository)
     {
       this.userRepository = userRepository;
     }
+    #endregion
 
+    #region Public Methods
     public GenericResponse SaveUser(UserProfile userProfile)
     {
       var response = userRepository.SaveUser(userProfile);
@@ -37,5 +44,11 @@ namespace TestCrud.Services.Implementation
     {
       return userRepository.DeleteUser(userId);
     }
+
+    public List<SelectItem> GetSkillType()
+    {
+      return userRepository.GetSkillType();
+    }
+    #endregion
   }
 }

@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
+@import "~ngx-toastr/toastr.css";
+
 a {
   color: #0366d6;
 }
@@ -15,5 +17,18 @@ code {
   border-color: #1861ac;
 }
 
-html, body { height: 100%; }
+input.ng-touched.ng-invalid{
+  border-color: #dc3545;
+}
+
+input.ng-valid{
+  border-color: #28a745;
+}
+
+table tr:hover{
+  cursor: pointer;
+  color:red;
+}
+
+html, body { height: 100%;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

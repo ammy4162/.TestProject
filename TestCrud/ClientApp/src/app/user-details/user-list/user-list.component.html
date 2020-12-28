@@ -1,0 +1,16 @@
+<table class="table table-hover">
+  <tr>
+    <td>Name</td>
+    <td>DOB</td>
+    <td>Designation</td>
+    <td>Skill</td>
+    <td>Delete</td>
+  </tr>
+  <tr *ngFor="let user of response">
+    <td (click)="getUser(user)">{{user.Name}}</td>
+    <td (click)="getUser(user)">{{user.DOB}}</td>
+    <td (click)="getUser(user)">{{user.Designation}}</td>
+    <td (click)="getUser(user)">{{user.SkillType}}</td>
+    <td (click)="deleteUser(user)">Delete</td>
+  </tr>
+</table>

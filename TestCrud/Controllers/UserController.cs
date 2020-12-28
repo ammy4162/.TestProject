@@ -5,24 +5,40 @@ using Microsoft.Extensions.Configuration;
 using TestCrud.Services.Interface;
 using TestCrud.Models;
 using TestCrud.Models.Response;
+using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace TestCrud.Controllers
 {
-  [Route("api/v1/[controller]")]
   [ApiController]
+  [Route("api/v1/[controller]")]
   public class UserController : ControllerBase
   {
+    #region Fields
     private readonly IUserService userService;
     private readonly IConfiguration configuration;
+    #endregion
 
+    #region Constructor
     public UserController(IUserService userService, IConfiguration configuration)
     {
       this.userService = userService;
       this.configuration = configuration;
     }
+    #endregion
+
+    #region Public Methods
+    [HttpGet]
+    [Route("getAbc")]
+    public string GetPostman([FromHeader] string ownerId)
+    {
+      return "Successful";
+    }
 
     [HttpPost]
-    public IActionResult SaveUser([FromHeader] string userId, [FromBody] UserProfile userProfile)
+    [Route("save")]
+    public IActionResult SaveUser([FromBody] UserProfile userProfile)
     {
       var response = new GenericResponse();
       try
@@ -36,7 +52,6 @@ namespace TestCrud.Controllers
         {
           userProfile.Id = GenerateDistinctId();
         }
-
         response = userService.SaveUser(userProfile);
         return Ok(response);
       }
@@ -49,6 +64,7 @@ namespace TestCrud.Controllers
     }
 
     [HttpGet]
+    [Route("{userId}")]
     public IActionResult GetUser([FromHeader] string userId)
     {
       var response = new UserResponse();
@@ -66,6 +82,7 @@ namespace TestCrud.Controllers
     }
 
     [HttpGet]
+    [Route("getAll")]
     public IActionResult GetUsers()
     {
       try
@@ -79,7 +96,8 @@ namespace TestCrud.Controllers
     }
 
     [HttpDelete]
-    public IActionResult DeleteUser([FromHeader] string userId)
+    [Route("{userId}")]
+    public IActionResult DeleteUser(string userId)
     {
       try
       {
@@ -92,10 +110,29 @@ namespace TestCrud.Controllers
       }
     }
 
+    [HttpGet]
+    [Route("skillType")]
+    public ActionResult GetSkillType()
+    {
+      try
+      {
+        List<SelectItem> response = new List<SelectItem>();
+        response = userService.GetSkillType();
+        return Ok(response);
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex);
+      }
+    }
+    #endregion
+
+    #region Private Methods
     private string GenerateDistinctId()
     {
       var id = Guid.NewGuid().ToString();
       return id;
     }
+    #endregion
   }
 }

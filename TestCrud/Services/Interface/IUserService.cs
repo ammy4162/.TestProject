@@ -14,5 +14,7 @@ namespace TestCrud.Services.Interface
 
     GenericResponse DeleteUser(string userId);
 
+    List<SelectItem> GetSkillType();
+
   }
 }

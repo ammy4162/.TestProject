@@ -12,6 +12,7 @@ namespace TestCrud.Models.DBModels
         public string Designation { get; set; }
         public bool IsArchive { get; set; }
         public int? SkillId { get; set; }
+        public DateTime? Dob { get; set; }
 
         public virtual TbSkillType Skill { get; set; }
     }

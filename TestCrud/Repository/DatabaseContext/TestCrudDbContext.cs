@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TestCrud.Models.DBModels;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -9,8 +10,15 @@ namespace TestCrud.Repository.DatabaseContext
 {
     public partial class TestCrudDbContext : DbContext
     {
+        private readonly IConfiguration configuration;
+
         public TestCrudDbContext()
         {
+        }
+
+        public TestCrudDbContext(IConfiguration configuration;)
+        {
+            this.configuration = configuration;
         }
 
         public TestCrudDbContext(DbContextOptions<TestCrudDbContext> options)
@@ -25,8 +33,7 @@ namespace TestCrud.Repository.DatabaseContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-68PBUD8R;Database=Test-User;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(configuration["ConnectionStrings:TestCrud"]);
             }
         }
 
@@ -60,6 +67,10 @@ namespace TestCrud.Repository.DatabaseContext
                 entity.Property(e => e.Designation)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Dob)
+                    .HasColumnType("date")
+                    .HasColumnName("DOB");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
